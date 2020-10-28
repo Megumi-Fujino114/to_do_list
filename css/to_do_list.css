@@ -1,0 +1,82 @@
+
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+
+h1{
+   background-color: #66CCCC;
+   color: white;
+   font-family: cursive;
+   height: 200px;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 24px;
+
+}
+
+form {
+	width: 60%;
+	height: 36px;
+	display: flex;
+	margin: 30px auto 20px;
+}
+input[type="text"] {
+	width: 80%;
+	padding: 3px 7px;
+	border: 2px solid #66CCCC;
+	border-radius: 5px 0 0 5px;
+}
+#btn {
+	width: 20%;
+	padding: 5px;
+	background-color: #0099CC;
+	color: white;
+	border: none;
+	border-radius: 0 5px 5px 0;
+	cursor: pointer;
+}
+
+.todo-list {
+	border-radius: 5px;
+	font-size: 20px;
+}
+
+/* 追加されるリストアイテムのCSS */
+.list1 {
+	height: 100px;
+	width: 300px;
+	border: 5px solid #99CCFF;
+    border-radius: 15px;
+	display: flex;
+	align-items: center;
+	/* ボタンが追加された時、タスクの内容とボタンを左右に配置 */
+	justify-content: space-around;
+	/*margin: 20px 350px 0 20px;*/
+	margin: 0 auto 0 0;
+}
+
+.list2 {
+	height: 100px;
+	width: 300px;
+	border: 5px solid #CCCCFF;
+	border-radius: 15px;
+	display: flex;
+	align-items: center;
+/*	margin: 20px 0px 20px 350prx;*/
+	/* ボタンが追加された時、タスクの内容とボタンを左右に配置 */
+	justify-content: space-around;
+	margin: 0 0 0 auto;
+}
+
+/* 追加されるリストアイテムのDeleteボタン */
+.delete {
+	font-size: 20px;
+	color: #663300;
+	cursor: pointer;
+}
