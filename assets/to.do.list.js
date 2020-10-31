@@ -1,85 +1,102 @@
-// このファイルに処理を記述する
+let data;
+          if(localStorage.getItem("mytodoList")){
+          data = JSON.parse(localStorage.getItem("mytodoList")); //データを取り出してdataに代入
+          }else{
+          data = [];
+}
+          console.log(data);
 
-// モックの本来は動的に作る部分をコメントアウトしておく
+          for(let i = 0; i < data.length ;i++){
+          add_li_tag(data[i]);
+}
 
-// addボタンの処理
+let addbtn = document.querySelector("#btn");
 
-// addボタンが押されたら
-// 1 入力文字のチェック
-// 空文字なら何もしない
-// 何か入力されていたら
-// 2 ulの中にliとして表示する
-// ３　表示するliには右側にdeleateボタンが表示されているようにする
-// 追加されるliはどんどん下に追加されていく
+          addbtn.addEventListener("click",function(){
 
-// addボタン要素の取得
+          let input_text = document.querySelector("#input").value;
 
-　let addbtn = document.querySelector("#btn");
+          if( input_text != ""){
 
-// addbtnが押されたときのイベントを取得(addEventListener)
-// イベントを察知したい要素　addEventListener(察知したいイベント,function(){イベントが発生したら行いたい処理});
- addbtn.addEventListener("click",function(){
-   // １入力文字のチェック
-   // 入力文字の取得 (inputの時はtext.contentではなくvalue)
-   let input_text = document.querySelector("#input").value;
-   //input_textが空じゃなかったら処理を行う 
-   if( input_text != ""){
-   // 2 ulの中にliとして表示する
-   // 親要素のulを変数に取得する
-   let todo_list = document.querySelector(".todo-list");
-   // 追加予定のliタグを生成する
-   let li =  document.createElement("li");
-   // listの中は<li></li>が入ってる
-   // liのクラスにlistを追加  
+          add_li_tag(input_text);
 
-  for(i=0 ; i<li.length; i++)
-    if (i % 2 === 0) {
-      todo_list.appendChild(li);
-      li.classList.add("list2");
+          data.push(input_text);
 
-    } else {
-      todo_list.appendChild(li);
-      li.classList.add("list1");
-     };
-   // li.classList.add("list1");
-   // // li<li class = "list"></li>が入ってる
+           localStorage.setItem('mytodoList',JSON.stringify(data));
 
-   // 生成したliタグの文字を入力された文字（input_text)にする（代入する）
-   li.textContent = input_text;
-   // li<li class = "list">入力された文字</li>
-   console.log(li);
-
-   // liの中にdeleteボタンとなるdivタグを追加
-   let div_delete = document.createElement("div");
-   // div_deleteには<div></div>が入ってる
-
-　　//divにクラス名deleateを指定 
-   div_delete.classList.add("delete");
-   // div_deleteには<div class = "delete"></div>が入っている
-　　div_delete.classList.add("fas");
-　　div_delete.classList.add("fa-trash-alt");
-　　//生成したdivタグを親要素liに追加 
-   li.appendChild(div_delete);　
-  // liには<li class ="list>入力された文字<div class="delete">Delete</div></li>が入っている　 　　
-
-   // deleteボタンの処理
-   // 押されたリストの全部が消える
-   // 押されたDeleteボタンの親要素のli
-   div_delete.addEventListener("click", function(){
-   // this Deleteボタン
-   // this.parentElement Deleteを含んだliタグ
-   let hantei = confirm("本当に削除しますか？");
-　　//オッケーが押されたら削除する
-     if(hantei == true){
-      this.parentElement.remove();
-     }
-
-   });
-
-   // liタグを作ったら実際にタグをulに追加する（appendChild)
-   // todo_list.appendChild(li);
-
-   document.querySelector("#input").value = "";
+          document.querySelector("#input").value = "";
 
 }
 });
+
+function add_li_tag(task_text){ 
+
+         let todo_list = document.querySelector(".todo-list");
+   
+         let todo_li = document.querySelectorAll("li");
+   
+         let li =  document.createElement("li"); 
+
+         let i = todo_li.length;
+
+         if (i % 2 === 0) {
+                todo_list.appendChild(li);
+                li.classList.add("list2");
+         } else {
+                todo_list.appendChild(li);
+                li.classList.add("list1");
+         };
+
+console.log (i);
+
+        li.textContent = task_text;
+  
+console.log(li);
+
+
+        let div_delete = document.createElement("div");
+ 
+　    　 div_delete.classList.add("fas");
+　　
+        div_delete.classList.add("fa-trash-alt");
+
+        li.appendChild(div_delete);　
+
+        div_delete.addEventListener("click", function(){
+
+             let hantei = confirm("本当に削除しますか？");
+
+             if(hantei == true){
+             this.parentElement.remove();
+
+             //data配列からも削除する
+             let del_text = this.parentElement.textContent;
+             data.splice(data.indexOf(del_text),1);
+
+
+             localStorage.setItem('mytodoList',JSON.stringify(data));
+
+             let todo_list_children = document.querySelector(".todo-list").children;
+
+             console.log(todo_list_children);
+              
+              for(let i = 0; i < todo_list_children.length ;i++){
+                todo_list_children[i].remove();
+              }
+             
+
+             // またliタグを振り直す
+             for(let i = 0; i < data.length ;i++){
+                add_li_tag(data[i]);
+             }
+
+        }
+})
+}
+
+
+
+
+
+
+
